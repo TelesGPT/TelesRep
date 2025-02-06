@@ -20,7 +20,7 @@ label {
     margin-bottom: 8px;
     font-weight: bold;
 }
-input[type="text"], input[type="date"], input[type="time"], select {
+input[type="text"], input[type="date"], input[type="time"], select, textarea {
     width: calc(100% - 22px);
     padding: 10px;
     margin-bottom: 10px;
@@ -43,7 +43,7 @@ button:hover {
     justify-content: space-between;
     margin-bottom: 20px;
 }
-.filters input, .filters select {
+.filters input, .filters select, .filters button {
     width: auto;
     margin-right: 10px;
 }
