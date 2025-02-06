@@ -20,7 +20,7 @@ label {
     margin-bottom: 8px;
     font-weight: bold;
 }
-input[type="text"], input[type="date"], input[type="time"] {
+input[type="text"], input[type="date"], input[type="time"], select {
     width: calc(100% - 22px);
     padding: 10px;
     margin-bottom: 10px;
@@ -37,6 +37,15 @@ button {
 }
 button:hover {
     background-color: #0056b3;
+}
+.filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.filters input, .filters select {
+    width: auto;
+    margin-right: 10px;
 }
 table {
     width: 100%;
