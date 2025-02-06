@@ -19,6 +19,15 @@
         <input type="text" id="responsavel" name="responsavel" required>
         <button type="submit">Adicionar Ordem</button>
     </form>
+    <div class="filters">
+        <input type="text" id="search" placeholder="Buscar ordens...">
+        <select id="statusFilter">
+            <option value="">Todos</option>
+            <option value="Pendente">Pendente</option>
+            <option value="Entregue">Entregue</option>
+            <option value="Gerada">Gerada</option>
+        </select>
+    </div>
     <table>
         <thead>
             <tr>
@@ -40,4 +49,3 @@
     <script src="scripts.js"></script>
 </body>
 </html>
-
