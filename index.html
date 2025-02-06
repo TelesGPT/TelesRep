@@ -17,6 +17,12 @@
         <input type="time" id="hora" name="hora" required>
         <label for="responsavel">Responsável:</label>
         <input type="text" id="responsavel" name="responsavel" required>
+        <label for="prioridade">Prioridade:</label>
+        <select id="prioridade" name="prioridade" required>
+            <option value="Alta">Alta</option>
+            <option value="Média">Média</option>
+            <option value="Baixa">Baixa</option>
+        </select>
         <button type="submit">Adicionar Ordem</button>
     </form>
     <div class="filters">
@@ -27,6 +33,7 @@
             <option value="Entregue">Entregue</option>
             <option value="Gerada">Gerada</option>
         </select>
+        <button onclick="exportarDados()">Exportar Dados</button>
     </div>
     <table>
         <thead>
@@ -37,8 +44,10 @@
                 <th>Data Programada</th>
                 <th>Hora Programada</th>
                 <th>Responsável</th>
+                <th>Prioridade</th>
                 <th>Status</th>
                 <th>Gerada</th>
+                <th>Notas</th>
                 <th class="actions">Ações</th>
             </tr>
         </thead>
