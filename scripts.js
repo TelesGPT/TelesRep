@@ -1,5 +1,7 @@
 let orderIdCounter = 1;
 const orderTableBody = document.getElementById('orderTableBody');
+const searchInput = document.getElementById('search');
+const statusFilter = document.getElementById('statusFilter');
 
 document.getElementById('orderForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -65,5 +67,33 @@ function excluirOrdem(id) {
     const row = document.getElementById(`status-${id}`).parentElement;
     if (row) {
         row.remove();
+    }
+}
+
+searchInput.addEventListener('input', function() {
+    filterOrders();
+});
+
+statusFilter.addEventListener('change', function() {
+    filterOrders();
+});
+
+function filterOrders() {
+    const searchValue = searchInput.value.toLowerCase();
+    const statusValue = statusFilter.value;
+    const rows = orderTableBody.getElementsByTagName('tr');
+
+    for (const row of rows) {
+        const cells = row.getElementsByTagName('td');
+        const descricao = cells[1].textContent.toLowerCase();
+        const status = cells[6].textContent;
+        const matchesSearch = descricao.includes(searchValue);
+        const matchesStatus = statusValue === '' || status === statusValue;
+
+        if (matchesSearch && matchesStatus) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
     }
 }
