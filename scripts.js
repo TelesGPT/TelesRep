@@ -9,14 +9,15 @@ document.getElementById('orderForm').addEventListener('submit', function(event) 
     const data = document.getElementById('data').value;
     const hora = document.getElementById('hora').value;
     const responsavel = document.getElementById('responsavel').value;
-    addOrder(descricao, data, hora, responsavel);
+    const prioridade = document.getElementById('prioridade').value;
+    addOrder(descricao, data, hora, responsavel, prioridade);
     document.getElementById('descricao').value = '';
     document.getElementById('data').value = '';
     document.getElementById('hora').value = '';
     document.getElementById('responsavel').value = '';
 });
 
-function addOrder(descricao, data, hora, responsavel) {
+function addOrder(descricao, data, hora, responsavel, prioridade) {
     const row = document.createElement('tr');
     row.innerHTML = `
         <td>${orderIdCounter}</td>
@@ -25,8 +26,10 @@ function addOrder(descricao, data, hora, responsavel) {
         <td contenteditable="true">${data}</td>
         <td contenteditable="true">${hora}</td>
         <td contenteditable="true">${responsavel}</td>
+        <td contenteditable="true">${prioridade}</td>
         <td id="status-${orderIdCounter}">Pendente</td>
         <td><input type="checkbox" id="gerada-${orderIdCounter}" onchange="marcarGerada(${orderIdCounter})"></td>
+        <td><textarea id="notas-${orderIdCounter}" placeholder="Adicionar notas..."></textarea></td>
         <td class="actions">
             <button onclick="marcarEntregue(${orderIdCounter})">Marcar como Entregue</button>
             <button onclick="cancelarEntregue(${orderIdCounter})">Cancelar Entregue</button>
@@ -86,7 +89,7 @@ function filterOrders() {
     for (const row of rows) {
         const cells = row.getElementsByTagName('td');
         const descricao = cells[1].textContent.toLowerCase();
-        const status = cells[6].textContent;
+        const status = cells[7].textContent;
         const matchesSearch = descricao.includes(searchValue);
         const matchesStatus = statusValue === '' || status === statusValue;
 
@@ -96,4 +99,36 @@ function filterOrders() {
             row.style.display = 'none';
         }
     }
+}
+
+function exportarDados() {
+    const rows = orderTableBody.getElementsByTagName('tr');
+    let csvContent = "ID,Descrição,Data de Criação,Data Programada,Hora Programada,Responsável,Prioridade,Status,Gerada,Notas\n";
+
+    for (const row of rows) {
+        const cells = row.getElementsByTagName('td');
+        const csvRow = [
+            cells[0].textContent,
+            cells[1].textContent,
+            cells[2].textContent,
+            cells[3].textContent,
+            cells[4].textContent,
+            cells[5].textContent,
+            cells[6].textContent,
+            cells[7].textContent,
+            cells[8].querySelector('input').checked ? 'Sim' : 'Não',
+            cells[9].querySelector('textarea').value
+        ].join(',');
+        csvContent += csvRow + "\n";
+    }
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'ordens_servico.csv');
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 }
